@@ -6,23 +6,23 @@ function rad2deg (angle) {
     return angle * 57.29577951308232; // angle / Math.PI * 180
 };
 
-getBoundingBox = function(lat_degrees,lon_degrees,distance_in_km) {
+getBoundingBox = function(latDegrees,lonDegrees,distanceKm) {
 
     var radius = 6378;
 
-    var due_north = deg2rad(0);
-    var due_south = deg2rad(180);
-    var due_east = deg2rad(90);
-    var due_west = deg2rad(270);
+    var dueNorth = deg2rad(0);
+    var dueSouth = deg2rad(180);
+    var dueEast = deg2rad(90);
+    var dueWest = deg2rad(270);
 
-    var lat_r = deg2rad(lat_degrees);
-    var lon_r = deg2rad(lon_degrees);
+    var latRadius = deg2rad(latDegrees);
+    var lonRadius = deg2rad(lonDegrees);
 
-    northmost  = Math.asin(Math.sin(lat_r)*Math.cos(distance_in_km/radius)+Math.cos(lat_r)*Math.sin(distance_in_km/radius)*Math.cos(due_north));
-    southmost  = Math.asin(Math.sin(lat_r)*Math.cos(distance_in_km/radius)+Math.cos(lat_r)*Math.sin(distance_in_km/radius)*Math.cos(due_south));
+    northmost  = Math.asin(Math.sin(latRadius)*Math.cos(distanceKm/radius)+Math.cos(latRadius)*Math.sin(distanceKm/radius)*Math.cos(dueNorth));
+    southmost  = Math.asin(Math.sin(latRadius)*Math.cos(distanceKm/radius)+Math.cos(latRadius)*Math.sin(distanceKm/radius)*Math.cos(dueSouth));
 
-    eastmost = lon_r + Math.atan2(Math.sin(due_east)*Math.sin(distance_in_km/radius)*Math.cos(lat_r),Math.cos(distance_in_km/radius)-Math.sin(lat_r)*Math.sin(lat_r));
-    westmost = lon_r + Math.atan2(Math.sin(due_west)*Math.sin(distance_in_km/radius)*Math.cos(lat_r),Math.cos(distance_in_km/radius)-Math.sin(lat_r)*Math.sin(lat_r));
+    eastmost = lonRadius + Math.atan2(Math.sin(dueEast)*Math.sin(distanceKm/radius)*Math.cos(latRadius),Math.cos(distanceKm/radius)-Math.sin(latRadius)*Math.sin(latRadius));
+    westmost = lonRadius + Math.atan2(Math.sin(dueWest)*Math.sin(distanceKm/radius)*Math.cos(latRadius),Math.cos(distanceKm/radius)-Math.sin(latRadius)*Math.sin(latRadius));
 
 
     northmost = rad2deg(northmost);
