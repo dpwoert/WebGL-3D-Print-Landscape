@@ -6,28 +6,28 @@ function rad2deg (angle) {
     return angle * 57.29577951308232; // angle / Math.PI * 180
 };
 
-function x2lat(xPosition,xWidth,latDegrees,lonDegrees,distanceKm) {
+x2lat = function(xPosition,xWidth,latDegrees,lonDegrees,distanceKm) {
         var latMin = getBoundingBox(latDegrees,lonDegrees,distanceKm)[0];
         var latMax = getBoundingBox(latDegrees,lonDegrees,distanceKm)[1];
         var x2latPosition = latMin+(xPosition*((latMax - latMin)/xWidth));
         return x2latPosition;
 };
 
-function y2lon(yPosition,yHeight,latDegrees,lonDegrees,distanceKm) {
+y2lon = function(yPosition,yHeight,latDegrees,lonDegrees,distanceKm) {
         var lonMin = getBoundingBox(latDegrees,lonDegrees,distanceKm)[2];
         var lonMax = getBoundingBox(latDegrees,lonDegrees,distanceKm)[3];
         var y2lonPosition = lonMin+(yPosition*((lonMax - lonMin)/yHeight));
         return y2lonPosition;
 };
 
-function lat2x(latPosition,xWidth,latDegrees,lonDegrees,distanceKm) {
+lat2x = function(latPosition,xWidth,latDegrees,lonDegrees,distanceKm) {
         var latMin = getBoundingBox(latDegrees,lonDegrees,distanceKm)[0];
         var latMax = getBoundingBox(latDegrees,lonDegrees,distanceKm)[1];
         var lat2xPosition = Math.round(xWidth-((latMax - latPosition)*(xWidth/(latMax-latMin))))
         return lat2xPosition;
 };
 
-function lon2y(lonPosition,yHeight,latDegrees,lonDegrees,distanceKm) {
+lon2y = function(lonPosition,yHeight,latDegrees,lonDegrees,distanceKm) {
         var lonMin = getBoundingBox(latDegrees,lonDegrees,distanceKm)[2];
         var lonMax = getBoundingBox(latDegrees,lonDegrees,distanceKm)[3];
         var lon2yPosition = Math.round(yHeight-((lonMax - lonPosition)*(yHeight/(lonMax-lonMin))))
