@@ -8,7 +8,6 @@ function rad2deg (angle) {
 
 getBoundingBox = function(lat_degrees,lon_degrees,distance_in_km) {
 
-    var array = [];
     var radius = 6378;
 
     var due_north = deg2rad(0);
