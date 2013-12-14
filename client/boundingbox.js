@@ -27,6 +27,13 @@ function lat2x(latPosition,xWidth,latDegrees,lonDegrees,distanceKm) {
         return lat2xPosition;
 };
 
+function lon2y(lonPosition,yHeight,latDegrees,lonDegrees,distanceKm) {
+        var lonMin = getBoundingBox(latDegrees,lonDegrees,distanceKm)[2];
+        var lonMax = getBoundingBox(latDegrees,lonDegrees,distanceKm)[3];
+        var lon2yPosition = Math.round(yHeight-((lonMax - lonPosition)*(yHeight/(lonMax-lonMin))))
+        return lon2yPosition;
+};
+
 getBoundingBox = function(latDegrees,lonDegrees,distanceKm) {
 
     var radius = 6378;
