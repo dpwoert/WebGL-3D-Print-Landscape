@@ -6,6 +6,20 @@ function rad2deg (angle) {
     return angle * 57.29577951308232; // angle / Math.PI * 180
 };
 
+function x2lat(xPosition,xWidth,latDegrees,lonDegrees,distanceKm) {
+        var latMin = getBoundingBox(latDegrees,lonDegrees,distanceKm)[0];
+        var latMax = getBoundingBox(latDegrees,lonDegrees,distanceKm)[1];
+        var x2latPosition = latMin+(xPosition*((latMax - latMin)/xWidth));
+        return x2latPosition;
+};
+
+function y2lon(yPosition,yHeight,latDegrees,lonDegrees,distanceKm) {
+        var lonMin = getBoundingBox(latDegrees,lonDegrees,distanceKm)[2];
+        var lonMax = getBoundingBox(latDegrees,lonDegrees,distanceKm)[3];
+        var y2lonPosition = lonMin+(yPosition*((lonMax - lonMin)/yHeight));
+        return y2lonPosition;
+};
+
 getBoundingBox = function(latDegrees,lonDegrees,distanceKm) {
 
     var radius = 6378;
@@ -49,6 +63,3 @@ getBoundingBox = function(latDegrees,lonDegrees,distanceKm) {
 
     return [lat1,lat2,lon1,lon2]
 };
-
-// Testje met coordinaten (is dus geen rijksdriehoekcoordinaten)
-// getBoundingBox(51.697928000000000000, 5.317005999999992000, 3.6);
