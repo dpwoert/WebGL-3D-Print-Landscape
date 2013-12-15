@@ -20,13 +20,19 @@ DDD.init = function(){
     DDD.hemisphere = new THREE.HemisphereLight(0xffffff, 0x444444, 0.8);
  	DDD.scene.add(DDD.hemisphere);
 
+ 	DDD.zon = new THREE.PointLight(0xFFFFFF);
+	DDD.zon.position.x = 1000;
+	DDD.zon.position.y = 1000;
+	DDD.zon.position.z = 1000;
+	DDD.zon.intensity = 0.2;
+	DDD.scene.add(DDD.zon);
+
     //controls
     DDD.addControls();
 
     //timer and start
     DDD.clock = new THREE.Clock();
     DDD.animate();
-
 
     return DDD.scene;
 	
@@ -39,9 +45,9 @@ DDD.addControls = function(){
 	DDD.controls.movementSpeed = 100;
 	DDD.controls.lookSpeed = 0.125;
 	DDD.controls.lookVertical = true;
-	DDD.controls.constrainVertical = true;
-	DDD.controls.verticalMin = 1.4;
-	DDD.controls.verticalMax = 2.2;
+	// DDD.controls.constrainVertical = true;
+	// DDD.controls.verticalMin = 1.4;
+	// DDD.controls.verticalMax = 2.2;
 
 };
 

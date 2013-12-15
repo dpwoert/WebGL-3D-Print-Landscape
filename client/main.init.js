@@ -1,7 +1,14 @@
+window.BLOCK = false;
+
+window.updateCity = function(){
+	Meteor.call('getCity');
+	BLOCK = true;
+}
+
 Meteor.startup(function(){
 	
 	//add landscape
-	window.landscape = new Landscape();
+	var landscape = new Landscape();
 	landscape.geo = {
 		lat: 51.697816,
 		lon: 5.303675,
@@ -9,24 +16,54 @@ Meteor.startup(function(){
 	}
 
 	console.log(landscape);
+	landscape.range = d3.scale.linear().domain([1900,2013]).range([50,300]).clamp(true);
 	landscape.init();
 
 	//add 3d world
 	var world = DDD.init();
-	world.add(landscape.mesh);
 
 	//load database
-	Meteor.subscribe("all-buildings");
-	window.DB = new Meteor.Collection('buildings');
+	Meteor.subscribe('all-buildings');
+	var DB = new Meteor.Collection('buildings');
 
-	window.TEST = landscape;
+	//get the correct data
+	var buildingCount = 0;
+	Meteor.call('buildingCount', function(err, res){ 
+		buildingCount = res; 
 
-});
+		console.log('nr of buildings to add: ' + buildingCount);
 
-Meteor.autorun(function(){
+		//load the data from the DB know we know the data
+		Meteor.autorun(function(){
 
-	//check if all is loaded
+			//check
+			if(window.BLOCK) return false;
 
-	//add to landscape
+			//get the data
+			var list = DB.find({}).fetch();
+
+			//check if all is loaded
+			if( buildingCount == list.length && buildingCount > 0 ){
+
+				console.log('start loading');
+
+				//add
+				_.each(list, function(building){
+					landscape.addPointGeo(building.lat, building.lon, building.bouwjaar, 1);
+				});
+
+				//build
+				landscape.build();
+			}
+
+		});
+
+	});
+
+	//add to 3d world
+	landscape.finished = function(){
+		world.add(landscape.mesh);
+		console.log('finished');
+	};
 
 });
