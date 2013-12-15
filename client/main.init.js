@@ -16,7 +16,8 @@ Meteor.startup(function(){
 	}
 
 	console.log(landscape);
-	landscape.range = d3.scale.linear().domain([1900,2013]).range([50,100]).clamp(true);
+	landscape.range = d3.scale.pow().domain([1900,2013]).range([50,100])
+	//.clamp(true);
 	landscape.init();
 
 	//add 3d world
