@@ -8,7 +8,7 @@ Landscape = function(){
 	};
 
 	//nr of lines on on axis
-	this.accuracy = 50;
+	this.accuracy = 500;
 	// this.accuracy = 250;
 
 	//range
@@ -47,10 +47,10 @@ Landscape = function(){
 	this.addPointGeo = function(lat, lon, value, weight){
 
 		//geo to point
-		var x = Math.round(lat2x(lat,this.accuracy, this.geo.lat,this.geo.lon,this.geo.radius));
-		var y = Math.round(lon2y(lon,this.accuracy, this.geo.lat,this.geo.lon,this.geo.radius));
+		var x = Math.round( ( (lat-this.box[0]) / Math.abs(this.box[0]-this.box[1])) * this.accuracy );
+		var y = Math.round( ( (lon-this.box[2]) / Math.abs(this.box[2]-this.box[3]) ) * this.accuracy );
 
-		//console.log(x, y);
+		// console.log(x, y);
 
 		//check if in plane
 		if(x >= 0 && x < this.accuracy && y >= 0 && y < this.accuracy){
