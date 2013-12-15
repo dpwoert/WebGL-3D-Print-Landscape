@@ -28,13 +28,18 @@ Meteor.methods({
 			radius = geo.radius;
 		}
 
-		console.log("====== Start Fetching city =======")
+		console.log("====== Start Fetching city =======");
+		geo.buildingsDB.remove({});
 
 		geo.makeCall({
 			'pos': pos,
 			'radius': radius
 		});
 
+	},
+
+	buildingCount: function(){
+		return geo.buildingsDB.find().count();
 	}
 
 });
@@ -62,13 +67,15 @@ geo.makeCall = function(obj){
 		//make request
 		Meteor.http.get(geo.APIurl, { params: options } , function(error, result){
 
+			console.log('got url: ' + result.data.url);
+
 			//add to data object
 			_.each(result.data.results, function(value){
 				geo.addBag(value);
 			});
 
 			//check if finished/more pages
-			if(result.data.results.length < obj.per_page){
+			if(result.data.results.length < options.per_page || result.data.results.length == 0){
 
 				//finished
 				console.log('finshed gettings BAG data');
@@ -105,5 +112,5 @@ geo.getCenter = function(arr){
     var maxX = Math.max.apply(null, x);
     var minY = Math.min.apply(null, y);
     var maxY = Math.max.apply(null, y);
-    return [(minX + maxX)/2, (minY + maxY)/2];
+    return [(minY + maxY)/2, (minX + maxX)/2];
 };
