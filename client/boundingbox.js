@@ -23,7 +23,7 @@ y2lon = function(yPosition,yHeight,latDegrees,lonDegrees,distanceKm) {
 lat2x = function(latPosition,xWidth,latDegrees,lonDegrees,distanceKm) {
         var latMin = getBoundingBox(latDegrees,lonDegrees,distanceKm)[0];
         var latMax = getBoundingBox(latDegrees,lonDegrees,distanceKm)[1];
-        var lat2xPosition = Math.round(xWidth-((latMax - latPosition)*(xWidth/(latMax-latMin))))
+        var lat2xPosition = Math.round((latMax - latPosition)*(xWidth/(latMax-latMin)))
         return lat2xPosition;
 };
 
