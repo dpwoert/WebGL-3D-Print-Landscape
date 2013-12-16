@@ -2,7 +2,7 @@ geo = {
 	APIurl: 'http://api.citysdk.waag.org/nodes',
 
 	radius: 4, //km
-	center: [51.697816,5.303675]
+	center: [51.70818,5.29720]
 
 };
 

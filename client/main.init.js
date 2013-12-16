@@ -10,9 +10,9 @@ Meteor.startup(function(){
 	//add landscape
 	var landscape = new Landscape();
 	landscape.geo = {
-		lat: 51.71135,
-		lon: 5.29793,
-		radius: 3.259
+		lat: 51.70818,
+		lon: 5.29720,
+		radius: 3.496
 	}
 
 	console.log(landscape);
