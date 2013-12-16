@@ -16,7 +16,7 @@ Landscape = function(){
 
 	//material
 	this.material = new THREE.MeshLambertMaterial({
-    	color: 0x0000FF,
+    	color: 0xFFFFFF,
     	shading: THREE.FlatShading,
     	// wireframe: true
     }); 
@@ -33,7 +33,7 @@ Landscape = function(){
 		this.mesh.rotateX(-Math.PI/2);
 
 		//make boundingbox
-		this.box = getBoundingBox(this.geo.lat,this.geo.lon,this.geo.radius);
+		this.box = getBoundingBox(this.geo.lat,this.geo.lon,this.geo.radius*2);
 		this.geoPoint = new GeoPoint(this.geo.lat, this.geo.lon);
 		this.BBOX = this.geoPoint.boundingCoordinates(this.geo.radius, null, true);
 
@@ -66,7 +66,7 @@ Landscape = function(){
 	};
 
 	this.addPoint = function(x, y, value, weight){
-		var i = (this.accuracy*x) + y;
+		var i = (this.accuracy*y) + x;
 		this.data[i].push({
 			'value': value,
 			'weight': weight

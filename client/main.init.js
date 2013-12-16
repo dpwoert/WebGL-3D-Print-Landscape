@@ -16,7 +16,7 @@ Meteor.startup(function(){
 	}
 
 	console.log(landscape);
-	landscape.range = d3.scale.pow().domain([1900,2013]).range([50,100])
+	landscape.range = d3.scale.pow().domain([1945,2013]).range([0,100])
 	//.clamp(true);
 	landscape.init();
 
@@ -50,6 +50,11 @@ Meteor.startup(function(){
 
 				//add
 				_.each(list, function(building){
+
+					if(isNaN(building.bouwjaar)){
+						console.log('geen bouwjaar');
+					}
+
 					landscape.addPointGeo(building.lat, building.lon, building.bouwjaar, 1);
 				});
 

@@ -25,7 +25,7 @@ DDD.init = function(){
 	DDD.zon.position.y = 1000;
 	DDD.zon.position.z = 1000;
 	DDD.zon.intensity = 0.2;
-	DDD.scene.add(DDD.zon);
+	//DDD.scene.add(DDD.zon);
 
     //controls
     DDD.addControls();
