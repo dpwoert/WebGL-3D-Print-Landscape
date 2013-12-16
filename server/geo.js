@@ -1,7 +1,7 @@
 geo = {
 	APIurl: 'http://api.citysdk.waag.org/nodes',
 
-	radius: 8, //km
+	radius: 4, //km
 	center: [51.697816,5.303675]
 
 };
@@ -33,7 +33,7 @@ Meteor.methods({
 
 		geo.makeCall({
 			'pos': pos,
-			'radius': radius
+			'radius': Math.sqrt(2*Math.pow(radius,2))
 		});
 
 	},
