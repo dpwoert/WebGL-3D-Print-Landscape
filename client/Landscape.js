@@ -9,7 +9,7 @@ Landscape = function(){
 
 	//nr of lines on on axis
 	// this.accuracy = 50;
-	this.accuracy = 100;
+	this.accuracy = 200;
 
 	//range
 	this.range = function(input){ return input; };
