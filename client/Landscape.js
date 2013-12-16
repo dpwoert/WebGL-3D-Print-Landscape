@@ -8,13 +8,8 @@ Landscape = function(){
 	};
 
 	//nr of lines on on axis
-<<<<<<< HEAD
-	this.accuracy = 50;
-	// this.accuracy = 100;
-=======
 	// this.accuracy = 50;
 	this.accuracy = 50;
->>>>>>> b7f866fa932bf813cb0ccc6263a47d8f50fea1ce
 
 	//range
 	this.range = function(input){ return input; };
