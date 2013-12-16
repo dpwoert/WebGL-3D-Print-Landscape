@@ -8,8 +8,8 @@ Landscape = function(){
 	};
 
 	//nr of lines on on axis
-	this.accuracy = 50;
-	// this.accuracy = 250;
+	// this.accuracy = 50;
+	this.accuracy = 100;
 
 	//range
 	this.range = function(input){ return input; };
@@ -36,9 +36,10 @@ Landscape = function(){
 		this.box = getBoundingBox(this.geo.lat,this.geo.lon,this.geo.radius*4);
 		this.geoPoint = new GeoPoint(this.geo.lat, this.geo.lon);
 		this.BBOX = this.geoPoint.boundingCoordinates(this.geo.radius, null, true);
+		this.rows = Math.sqrt(this.geometry.vertices.length);
 
 		//add point array
-		for(var i = 0; i < Math.pow(this.accuracy, 2) ; i++ ){
+		for(var i = 0; i < Math.pow(this.rows, 2) ; i++ ){
 			this.data.push([]);
 		}
 
@@ -49,12 +50,10 @@ Landscape = function(){
 	this.addPointGeo = function(lat, lon, value, weight, update){
 
 		//geo to point
-		// var x = Math.round( ( (lat-this.box[0]) / Math.abs(this.box[0]-this.box[1])) * this.accuracy );
-		// var y = Math.round( ( (lon-this.box[2]) / Math.abs(this.box[2]-this.box[3]) ) * this.accuracy );
-
-		var x = Math.round( ( (lat-this.BBOX[0].latitude()) / Math.abs(this.BBOX[0].latitude()-this.BBOX[1].latitude())) * this.accuracy );
-		var y = Math.round( ( (lon-this.BBOX[0].longitude()) / Math.abs(this.BBOX[0].longitude()-this.BBOX[1].longitude()) ) * this.accuracy );
+		var x = lat2x(lat, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
+		var y = lon2y(lon, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
 		y = this.accuracy - y;
+
 
 		//check if in plane
 		if(x >= 0 && x < this.accuracy && y >= 0 && y < this.accuracy){
@@ -66,7 +65,7 @@ Landscape = function(){
 	};
 
 	this.addPoint = function(x, y, value, weight){
-		var i = (this.accuracy*y) + x;
+		var i = (this.rows * y) + x;
 		this.data[i].push({
 			'value': value,
 			'weight': weight
@@ -75,10 +74,10 @@ Landscape = function(){
 
 	this.changePointGeo = function(lat, lon, height){
 
-		var x = Math.round( ( (lat-this.BBOX[0].latitude()) / Math.abs(this.BBOX[0].latitude()-this.BBOX[1].latitude())) * this.accuracy );
-		var y = Math.round( ( (lon-this.BBOX[0].longitude()) / Math.abs(this.BBOX[0].longitude()-this.BBOX[1].longitude()) ) * this.accuracy );
-		y = this.accuracy - y;
-		var i = (this.accuracy*y) + x;
+		var x = lat2x(lat, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
+		var y = lon2y(lon, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
+
+		var i = (this.rows * y ) + x;
 
 		this.changePoint(i, height, true);
 

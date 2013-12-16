@@ -12,11 +12,11 @@ Meteor.startup(function(){
 	landscape.geo = {
 		lat: 51.697816,
 		lon: 5.303675,
-		radius: 8
+		radius: 4
 	}
 
 	console.log(landscape);
-	landscape.range = d3.scale.pow().domain([1945,2013]).range([0,100])
+	landscape.range = d3.scale.linear().domain([1945,2013]).range([0,100])
 	//.clamp(true);
 	landscape.init();
 
