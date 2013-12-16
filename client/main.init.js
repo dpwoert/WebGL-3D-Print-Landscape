@@ -12,7 +12,7 @@ Meteor.startup(function(){
 	landscape.geo = {
 		lat: 51.697816,
 		lon: 5.303675,
-		radius: 4
+		radius: 8
 	}
 
 	console.log(landscape);
@@ -71,5 +71,8 @@ Meteor.startup(function(){
 		world.add(landscape.mesh);
 		console.log('finished');
 	};
+
+	//debug
+	window.DEBUG = landscape;
 
 });

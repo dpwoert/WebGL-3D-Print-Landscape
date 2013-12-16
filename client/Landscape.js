@@ -33,7 +33,7 @@ Landscape = function(){
 		this.mesh.rotateX(-Math.PI/2);
 
 		//make boundingbox
-		this.box = getBoundingBox(this.geo.lat,this.geo.lon,this.geo.radius*2);
+		this.box = getBoundingBox(this.geo.lat,this.geo.lon,this.geo.radius*4);
 		this.geoPoint = new GeoPoint(this.geo.lat, this.geo.lon);
 		this.BBOX = this.geoPoint.boundingCoordinates(this.geo.radius, null, true);
 
@@ -46,11 +46,11 @@ Landscape = function(){
 
 
 	//add points
-	this.addPointGeo = function(lat, lon, value, weight){
+	this.addPointGeo = function(lat, lon, value, weight, update){
 
 		//geo to point
-		//var x = Math.round( ( (lat-this.box[0]) / Math.abs(this.box[0]-this.box[1])) * this.accuracy );
-		//var y = Math.round( ( (lon-this.box[2]) / Math.abs(this.box[2]-this.box[3]) ) * this.accuracy );
+		// var x = Math.round( ( (lat-this.box[0]) / Math.abs(this.box[0]-this.box[1])) * this.accuracy );
+		// var y = Math.round( ( (lon-this.box[2]) / Math.abs(this.box[2]-this.box[3]) ) * this.accuracy );
 
 		var x = Math.round( ( (lat-this.BBOX[0].latitude()) / Math.abs(this.BBOX[0].latitude()-this.BBOX[1].latitude())) * this.accuracy );
 		var y = Math.round( ( (lon-this.BBOX[0].longitude()) / Math.abs(this.BBOX[0].longitude()-this.BBOX[1].longitude()) ) * this.accuracy );
@@ -71,6 +71,17 @@ Landscape = function(){
 			'value': value,
 			'weight': weight
 		});
+	}
+
+	this.changePointGeo = function(lat, lon, height){
+
+		var x = Math.round( ( (lat-this.BBOX[0].latitude()) / Math.abs(this.BBOX[0].latitude()-this.BBOX[1].latitude())) * this.accuracy );
+		var y = Math.round( ( (lon-this.BBOX[0].longitude()) / Math.abs(this.BBOX[0].longitude()-this.BBOX[1].longitude()) ) * this.accuracy );
+		y = this.accuracy - y;
+		var i = (this.accuracy*y) + x;
+
+		this.changePoint(i, height, true);
+
 	}
 
 	this.changePoint = function(i, height, update){
