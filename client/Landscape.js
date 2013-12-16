@@ -8,8 +8,8 @@ Landscape = function(){
 	};
 
 	//nr of lines on on axis
-	// this.accuracy = 50;
-	this.accuracy = 100;
+	this.accuracy = 50;
+	// this.accuracy = 100;
 
 	//range
 	this.range = function(input){ return input; };
@@ -45,19 +45,29 @@ Landscape = function(){
 
 	};
 
+	//geo
+	this.toGrid = function(lat, lon){
+
+		var x = lat2x(lat, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
+		var y = lon2y(lon, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
+		y = this.accuracy - y;
+
+		return {
+			'x': x,
+			'y': y
+		};
+
+	}
 
 	//add points
 	this.addPointGeo = function(lat, lon, value, weight, update){
 
 		//geo to point
-		var x = lat2x(lat, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
-		var y = lon2y(lon, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
-		y = this.accuracy - y;
-
+		var pos = this.toGrid(lat, lon);
 
 		//check if in plane
-		if(x >= 0 && x < this.accuracy && y >= 0 && y < this.accuracy){
-			this.addPoint(x, y, value, weight);
+		if(pos.x >= 0 && pos.x < this.accuracy && pos.y >= 0 && pos.y < this.accuracy){
+			this.addPoint(pos.x, pos.y, value, weight);
 		} else {
 			console.log('not in plane');
 		}
@@ -70,18 +80,18 @@ Landscape = function(){
 			'value': value,
 			'weight': weight
 		});
-	}
+	};
 
 	this.changePointGeo = function(lat, lon, height){
 
-		var x = lat2x(lat, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
-		var y = lon2y(lon, this.accuracy, this.geo.lat, this.geo.lon, this.geo.radius );
+		//geo to point
+		var pos = this.toGrid(lat, lon);
 
-		var i = (this.rows * y ) + x;
+		var i = (this.rows * pos.y ) + pos.x;
 
 		this.changePoint(i, height, true);
 
-	}
+	};
 
 	this.changePoint = function(i, height, update){
 
@@ -92,6 +102,58 @@ Landscape = function(){
 
 		this.geometry.vertices[i].z = height;
 		if(update) this.updateGeometry();
+
+	};
+
+	//regions
+	this.addGeoRegion = function(list){
+
+		list2 = [];
+
+		for(var i = 0; i < list.length ; i++ ){
+
+			//geo to point
+			var pos = this.toGrid(list[i][1], list[i][0]);
+
+			if(pos.x >= 0 && pos.x < this.accuracy && pos.y >= 0 && pos.y < this.accuracy){
+				list2.push(pos);
+			}
+
+		}
+
+		this.addRegion(list2);
+
+	};
+
+	this.addRegion = function(list){
+
+		var path = [];
+
+		//add points
+		for(var i = 0; i < list.length ; i++ ){
+
+			var i2 = i;
+			if(i == list.length-1) i2 = 0;
+
+			//get grid point
+			var pointNr = (this.rows * list[i2].y) + list[i2].x;
+			var vertex = this.geometry.vertices[pointNr];
+
+			//points
+			var point = new THREE.Vector3( vertex.x , vertex.y , 300 );
+			path.push(point);
+
+		}
+
+		//make path
+		var path3D = new THREE.SplineCurve3(path);
+		var tube = new THREE.TubeGeometry(path3D, 40, 10, 40, true, false);
+		var mesh = new THREE.Mesh(tube, this.material)
+		mesh.rotateX(-Math.PI/2);
+		//THREE.GeometryUtils.merge(this.mesh,tube);
+
+		DDD.scene.add( mesh );
+
 
 	};
 
@@ -137,10 +199,21 @@ Landscape = function(){
 	this.updateGeometry = function(){
 		this.geometry.verticesNeedUpdate = true;
 		THREE.GeometryUtils.triangulateQuads( this.geometry );
-	}
+	};
 
 	//execute when finished
 	this.finished = function(){};
+
+	//export to 3d object
+	this.exporter = function(){
+		var exporter = new THREE.ObjectExporter();
+
+		var output = JSON.stringify( exporter.parse( this.mesh ), null, '\t' );
+		output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
+
+		// console.save(output, 'MODEL.json');
+		THREE.saveGeometryToObj(this.geometry,true);
+	};
 
 
 };

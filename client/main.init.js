@@ -27,7 +27,7 @@ Meteor.startup(function(){
 	Meteor.subscribe('all-buildings');
 	var DB = new Meteor.Collection('buildings');
 
-	//get the correct data
+	//get the correct building data
 	var buildingCount = 0;
 	Meteor.call('buildingCount', function(err, res){ 
 		buildingCount = res; 
@@ -70,6 +70,22 @@ Meteor.startup(function(){
 	landscape.finished = function(){
 		world.add(landscape.mesh);
 		console.log('finished');
+
+		//only add region when finished
+		var regionUrls = 'http://api.citysdk.waag.org/admr.nl.shertogenbosch/regions?admr::admn_level=4&geom&per_page=100';
+		Meteor.http.get(regionUrls, function(err, r){
+
+			_.each(r.data.results, function(o){
+				landscape.addGeoRegion(o.geom.coordinates[0][0]);
+			})
+
+		});
+
+		//export to 3d object
+		if(location.hash = '#save'){
+			console.log('export');
+			landscape.exporter();
+		}
 	};
 
 	//debug
