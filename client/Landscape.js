@@ -9,7 +9,7 @@ Landscape = function(){
 
 	//nr of lines on on axis
 	// this.accuracy = 50;
-	this.accuracy = 40;
+	this.accuracy = 20;
 
 	//range
 	this.range = function(input){ return input; };
@@ -210,10 +210,10 @@ Landscape = function(){
 		var exporter = new THREE.GeometryExporter();
 
 		var output = JSON.stringify( exporter.parse( this.geometry ), null, '\t' );
-		//output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
+		output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
 
-		console.save(output, 'MODEL.json');
-		// THREE.saveGeometryToObj(this.geometry,true);
+		// console.save(output, 'MODEL.json');
+		THREE.saveGeometryToObj(this.geometry,true);
 	};
 
 
