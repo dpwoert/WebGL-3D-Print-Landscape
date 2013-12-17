@@ -82,7 +82,7 @@ Meteor.startup(function(){
 		});
 
 		//export to 3d object
-		if(location.hash = '#save'){
+		if(location.hash == '#save'){
 			console.log('export');
 			landscape.exporter();
 		}
