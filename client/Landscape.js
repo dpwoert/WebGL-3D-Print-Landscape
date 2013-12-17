@@ -207,13 +207,13 @@ Landscape = function(){
 
 	//export to 3d object
 	this.exporter = function(){
-		var exporter = new THREE.ObjectExporter();
+		var exporter = new THREE.GeometryExporter();
 
-		var output = JSON.stringify( exporter.parse( this.mesh ), null, '\t' );
+		var output = JSON.stringify( exporter.parse( this.geometry ), null, '\t' );
 		output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
 
-		// console.save(output, 'MODEL.json');
-		THREE.saveGeometryToObj(this.geometry,true);
+		console.save(output, 'MODEL.json');
+		// THREE.saveGeometryToObj(this.geometry,true);
 	};
 
 
