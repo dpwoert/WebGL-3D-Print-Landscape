@@ -9,7 +9,7 @@ Landscape = function(){
 
 	//nr of lines on on axis
 	// this.accuracy = 50;
-	this.accuracy = 50;
+	this.accuracy = 20;
 
 	//range
 	this.range = function(input){ return input; };
@@ -28,7 +28,7 @@ Landscape = function(){
 	this.init = function(){
 
 		//make 3d object
-		this.geometry = new THREE.PlaneGeometry(3000,3000,this.accuracy,this.accuracy);
+		this.geometry = new THREE.PlaneGeometry(3000,3000,this.accuracy+1,this.accuracy+1);
 		this.mesh = new THREE.Mesh( this.geometry, this.material );
 		this.mesh.rotateX(-Math.PI/2);
 
@@ -75,6 +75,7 @@ Landscape = function(){
 	};
 
 	this.addPoint = function(x, y, value, weight){
+
 		var i = (this.rows * y) + x;
 		this.data[i].push({
 			'value': value,
@@ -96,7 +97,7 @@ Landscape = function(){
 	this.changePoint = function(i, height, update){
 
 		if( isNaN(height) ){
-			height = -100;
+			height = 0; //TODO
 			console.log('no height data');
 		} 
 

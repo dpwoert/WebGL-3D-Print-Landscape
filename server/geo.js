@@ -93,15 +93,17 @@ geo.makeCall = function(obj){
 geo.addBag = function(obj){
 
 	var geoCenter = geo.getCenter(obj.geom.coordinates[0]);
+	var surface = getSurface(obj.geom.coordinates[0]);
 	var bagID = obj.layers['bag.panden'].data.pand_id;
 
 	//insert into database
 	geo.buildingsDB.insert({
-		id: bagID,
-		bouwjaar: obj.layers['bag.panden'].data.bouwjaar,
-		geom: obj.geom,
-		lat: geoCenter[0],
-		lon: geoCenter[1]
+		'id': bagID,
+		'bouwjaar': obj.layers['bag.panden'].data.bouwjaar,
+		'geom': obj.geom,
+		'lat': geoCenter[0],
+		'lon': geoCenter[1],
+		'surface': surface
 	});
 };
 
