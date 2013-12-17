@@ -16,7 +16,7 @@ Meteor.startup(function(){
 	}
 
 	console.log(landscape);
-	landscape.range = d3.scale.linear().domain([1945,2013]).range([0,500])
+	landscape.range = d3.scale.linear().domain([1945,2013]).range([0,75])
 	//.clamp(true);
 	landscape.init();
 

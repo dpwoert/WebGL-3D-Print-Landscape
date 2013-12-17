@@ -9,7 +9,7 @@ Landscape = function(){
 
 	//nr of lines on on axis
 	// this.accuracy = 50;
-	this.accuracy = 20;
+	this.accuracy = 40;
 
 	//range
 	this.range = function(input){ return input; };
@@ -28,7 +28,7 @@ Landscape = function(){
 	this.init = function(){
 
 		//make 3d object
-		this.geometry = new THREE.PlaneGeometry(3000,3000,this.accuracy+1,this.accuracy+1);
+		this.geometry = new THREE.PlaneGeometry(500,500,this.accuracy,this.accuracy);
 		this.mesh = new THREE.Mesh( this.geometry, this.material );
 		this.mesh.rotateX(-Math.PI/2);
 
@@ -210,7 +210,7 @@ Landscape = function(){
 		var exporter = new THREE.GeometryExporter();
 
 		var output = JSON.stringify( exporter.parse( this.geometry ), null, '\t' );
-		output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
+		//output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
 
 		console.save(output, 'MODEL.json');
 		// THREE.saveGeometryToObj(this.geometry,true);
