@@ -8,7 +8,7 @@ surface = function(coordinates){
 		buildingLatArray.push(coordinates[i][1]);
 	}
 
-	var buildingSurface = 1e8*(((Math.max.apply(Math, buildingLatArray))-(Math.min.apply(Math, buildingLatArray)))*((Math.max.apply(Math, buildingLonArray))-(Math.min.apply(Math, buildingLonArray)))
+	var buildingSurface = 1e8*(((Math.max.apply(Math, buildingLatArray))-(Math.min.apply(Math, buildingLatArray)))*((Math.max.apply(Math, buildingLonArray))-(Math.min.apply(Math, buildingLonArray))));
 
 	return buildingSurface;
 };
