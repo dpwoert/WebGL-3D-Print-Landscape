@@ -1,7 +1,8 @@
 3DCityLandscape
 ===============
 
-experiment trying to visualize the city of Den Bosch with 3d printing
+experiment trying to visualize the city of Den Bosch with **3d printing**
+  
 more info: http://datadpwoert.tumblr.com/tagged/3d%20printing
 
 ![](http://24.media.tumblr.com/784e83c2354dd3dba61f4ce28e03e798/tumblr_mzg0xln9IK1sgk57ho1_1280.jpg)
